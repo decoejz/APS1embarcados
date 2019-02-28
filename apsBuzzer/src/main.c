@@ -32,6 +32,8 @@
 /* variaveis globais                                                    */
 /************************************************************************/
 
+#define SONGTIME 1.5
+
 #define NOTE_C4  262   //Defining note frequency
 #define NOTE_D4  294
 #define NOTE_E4  330
@@ -156,6 +158,14 @@ int duration[] = {         //duration of each note (in ms) Quarter Note is set t
   125, 125, 125, 125, 125, 500
 };
 
+/*int notes[] = {
+	444,444,444,444,444,444,444,444,444
+};
+
+int duration[] = {
+	500,500,500,500,500,500,500,500,500	
+};*/
+
 /************************************************************************/
 /* prototypes                                                           */
 /************************************************************************/
@@ -204,22 +214,30 @@ int main(void)
   
   while (1)
   {
-	/*if(!pio_get(PIOA,34, BUT_PIO_IDX_MASK)){
-		for (int i=0;i<5;i++){
-			delay_ms(600);                   // Delay por software de 200 ms
-			pio_set(PIOA, BUZZER_PIO_IDX_MASK);    // Coloca 0 no pino do LED
-			delay_ms(600);                   // Delay por software de 200 ms	
-			pio_clear(PIOA, BUZZER_PIO_IDX_MASK);      // Coloca 1 no pino LED
+	//if(!pio_get(PIOA,34, BUT_PIO_IDX_MASK)){
+		for (int i=0;i<203;i++){
+			double periodo = 1.0/notes[i];
+			
+			double duracao=0;
+			
+			while(duracao < duration[i]){
+				if(notes[i]==0){
+					delay_ms(duration[i]);
+					duracao += duration[i];
+				}
+				else{
+					duracao +=periodo*1000;
+					pio_set(PIOA, BUZZER_PIO_IDX_MASK);
+					delay_us(periodo*1000000/2);
+					pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+					delay_us(periodo*1000000/2);
+				}
+			}
+			
 		}
-	}*/
-	double songspeed = 1.5;
-	for (int i=0;i<203;i++){       
-		pio_set(PIOA, BUZZER_PIO_IDX_MASK);
-		delay_ms(notes[i]);
-		pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
-		delay_ms(duration[i]);
-		
-	}
+	//}
+	
+	
 	
   }
   return 0;
