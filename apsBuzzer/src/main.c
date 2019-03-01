@@ -34,22 +34,10 @@
 /* variaveis globais                                                    */
 /************************************************************************/
 
-#define SONGTIME 1.5
-
 
 //*****************************************
 int BI = 25;
 int BM = 15;
-
-
-
-/*int notes[] = {
-	444,444,444,444,444,444,444,444,444
-};
-
-int duration[] = {
-	500,500,500,500,500,500,500,500,500	
-};*/
 
 /************************************************************************/
 /* prototypes                                                           */
@@ -99,30 +87,42 @@ int main(void)
   
   while (1)
   {
-	//if(!pio_get(PIOA,34, BUT_PIO_IDX_MASK)){
-		for (int i=0;i<203;i++){
-			double periodo = 1.0/notesI[i];
+	int pausa=0;
+	for (int i=0;i<34;i++){
+		double periodo = 1.0/notesI[i];
 			
-			double duracao=0;
+		double duracao=0;
 			
-			while(duracao < durationI[i]*BI){
-				if(notesI[i]==0){
-					delay_ms(durationI[i]);
-					duracao += durationI[i]*BI;
+		while(duracao < durationI[i]*BI){
+				
+			if(!pio_get(PIOA,PIO_DEFAULT, BUT_PIO_IDX_MASK)){
+				pausa = !pausa;
+					
+				while(pausa){
 					pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
-				}
-				else{
-					duracao +=periodo*1000;
-					pio_set(PIOA, BUZZER_PIO_IDX_MASK);
-					delay_us(periodo*1000000/2);
-					pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
-					delay_us(periodo*1000000/2);
-					pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
-				}
+					delay_ms(200);
+					if(!pio_get(PIOA,PIO_DEFAULT, BUT_PIO_IDX_MASK)){
+						pausa = !pausa;
+					}
+				}					
 			}
-			
+				
+			if(notesI[i]==0){
+				delay_ms(durationI[i]);
+				duracao += durationI[i]*BI;
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+			}
+			else{
+				duracao +=periodo*1000;
+				pio_set(PIOA, BUZZER_PIO_IDX_MASK);
+				delay_us(periodo*1000000/2);
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+				delay_us(periodo*1000000/2);
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+			}
 		}
-	//}
+			
+	}
 	
 	
 	
