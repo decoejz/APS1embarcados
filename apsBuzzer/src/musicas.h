@@ -1,7 +1,9 @@
 #include <notes.h>
 
+//*****************************************
+//Indiana Jones
 int notesI[] = {
-	NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C5, 
+	35, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C5, 
 	NOTE_D4, NOTE_E4, NOTE_F4, 
 	NOTE_G4, NOTE_A4, NOTE_B4, NOTE_F5,
 	NOTE_A4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5,
@@ -14,7 +16,7 @@ int notesI[] = {
 };
 
 int durationI[] = {
-	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
+	35,COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, MINIMA+MINIMA/2,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, SEMINIMA, SEMINIMA, SEMINIMA,
@@ -24,10 +26,11 @@ int durationI[] = {
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, SEMINIMA,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, SEMINIMA, MINIMA
 };
-	
-	
-int notesD[] = {       //Note of the song, 0 is a rest/pulse
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
+
+//*****************************************
+//Piratas do Caribe	
+int notesD[] = { 
+   203, NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
    NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
    NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
    NOTE_A4, NOTE_G4, NOTE_A4, 0,
@@ -47,8 +50,7 @@ int notesD[] = {       //Note of the song, 0 is a rest/pulse
    NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, 0,
    NOTE_C5, NOTE_A4, NOTE_B4, 0,
 
-   NOTE_A4, NOTE_A4, 
-   //Repeat of first part
+   NOTE_A4, NOTE_A4,
    NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
    NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
    NOTE_A4, NOTE_G4, NOTE_A4, 0,
@@ -79,9 +81,9 @@ int notesD[] = {       //Note of the song, 0 is a rest/pulse
    NOTE_D5, 0, 0, NOTE_C5, 0, 0,
    NOTE_B4, NOTE_C5, 0, NOTE_B4, 0, NOTE_A4
 };
-//*****************************************
-int durationD[] = {         //duration of each note (in ms) Quarter Note is set to 250 ms
-  125, 125, 250, 125, 125, 
+
+int durationD[] = { 
+  203, 125, 125, 250, 125, 125, 
   125, 125, 250, 125, 125,
   125, 125, 250, 125, 125,
   125, 125, 375, 125, 
@@ -102,7 +104,6 @@ int durationD[] = {         //duration of each note (in ms) Quarter Note is set 
   125, 125, 375, 375,
 
   250, 125,
-  //Rpeat of First Part
   125, 125, 250, 125, 125,
   125, 125, 250, 125, 125,
   125, 125, 375, 125, 
@@ -121,7 +122,6 @@ int durationD[] = {         //duration of each note (in ms) Quarter Note is set 
   250, 125, 250, 125, 
   125, 125, 250, 125, 125,
   125, 125, 375, 375,
-  //End of Repeat
   
   250, 125, 375, 250, 125, 375,
   125, 125, 125, 125, 125, 125, 125, 125, 375,
@@ -133,6 +133,7 @@ int durationD[] = {         //duration of each note (in ms) Quarter Note is set 
   250, 125, 375, 250, 125, 375,
   125, 125, 125, 125, 125, 500
 };
+//*****************************************
 
 int notesM[] = {
     NOTE_B4, NOTE_A4, NOTE_G4,
