@@ -88,11 +88,9 @@ void init(void)
 	pio_set_output(LED3_PIO, LED3_PIO_IDX_MASK, 0, 0, 0);
 	
 	pio_set_input(BMUS_PIO,BMUS_PIO_IDX, PIO_PULLUP);
-	//pio_pull_up(BMUS_PIO,BMUS_PIO_IDX,1);
 	pio_set_debounce_filter(BMUS_PIO,BMUS_PIO_IDX,200);
 	
-	pio_set_input(BNEX_PIO,BNEX_PIO_IDX,0);
-	pio_pull_up(BNEX_PIO,BNEX_PIO_IDX,1);
+	pio_set_input(BNEX_PIO,BNEX_PIO_IDX,PIO_PULLUP);
 	pio_set_debounce_filter(BNEX_PIO,BNEX_PIO_IDX,200);
 }
 
@@ -112,6 +110,7 @@ int main(void)
   
   while (1)
   {
+	//*************MUSICA 1 - TEMA INDIANA JONES*****************
 	pio_set(PIOA, LED1_PIO_IDX_MASK);
 	pio_clear(PIOA, LED2_PIO_IDX_MASK);
 	pio_clear(LED3_PIO, LED3_PIO_IDX_MASK);
@@ -161,7 +160,8 @@ int main(void)
 		}
 			
 	}
-	
+	delay_ms(200);
+	//**************MUSICA 2 - TEMA PIRATAS DO CARIBE************************
 	pio_set(PIOA, LED2_PIO_IDX_MASK);
 	pio_clear(PIOA, LED1_PIO_IDX_MASK);
 	pio_clear(LED3_PIO, LED3_PIO_IDX_MASK);
@@ -210,9 +210,59 @@ int main(void)
 			}
 		}
 		
+	}	
+	delay_ms(200);
+	//**********************MUSICA 3 - AVA NAGUILA****************************
+	pio_clear(PIOA, LED2_PIO_IDX_MASK);
+	pio_clear(PIOA, LED1_PIO_IDX_MASK);
+	pio_set(LED3_PIO, LED3_PIO_IDX_MASK);
+	for (int i=2;i<notesM[0];i++){
+		if(proxima){
+			proxima=0;
+			break;
+		}
+		
+		double periodo = 1.0/notesM[i];
+		
+		double duracao=0;
+		
+		while(duracao < durationM[i]*notesM[1]){
+			if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
+				pausa = !pausa;
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+				
+				while(pausa){
+					delay_ms(170);
+					if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
+						pausa = !pausa;
+					}
+					delay_ms(170);
+				}
+			}
+			
+			if(!pio_get(PIOD,PIO_INPUT, BNEX_PIO_IDX_MASK)){
+				proxima = 1;
+				break;
+			}
+			
+			if(notesI[i]==0){
+				delay_ms(durationM[i]);
+				duracao += durationM[i]*notesM[1];
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+			}
+			
+			else{
+				duracao += periodo*1000;
+				pio_set(PIOA, BUZZER_PIO_IDX_MASK);
+				delay_us(periodo*1000000/2);
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+				delay_us(periodo*1000000/2);
+				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
+			}
+		}
+		
 	}
-	
-	
+	delay_ms(200);
 	
   }
   return 0;

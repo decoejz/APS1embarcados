@@ -3,7 +3,7 @@
 //*****************************************
 //Indiana Jones
 int notesI[] = {
-	35, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C5, 
+	35, 25, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C5, 
 	NOTE_D4, NOTE_E4, NOTE_F4, 
 	NOTE_G4, NOTE_A4, NOTE_B4, NOTE_F5,
 	NOTE_A4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5,
@@ -16,7 +16,7 @@ int notesI[] = {
 };
 
 int durationI[] = {
-	35,COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
+	35, 25,COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, MINIMA+MINIMA/2,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, COLCHEIA, COLCHEIA+MINIMA,
 	COLCHEIA+COLCHEIA/2, SEMICOLCHEIA, SEMINIMA, SEMINIMA, SEMINIMA,
@@ -30,7 +30,7 @@ int durationI[] = {
 //*****************************************
 //Piratas do Caribe	
 int notesD[] = { 
-   203, NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
+   203, 1, NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
    NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
    NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
    NOTE_A4, NOTE_G4, NOTE_A4, 0,
@@ -83,7 +83,7 @@ int notesD[] = {
 };
 
 int durationD[] = { 
-  203, 125, 125, 250, 125, 125, 
+  203, 1, 125, 125, 250, 125, 125, 
   125, 125, 250, 125, 125,
   125, 125, 250, 125, 125,
   125, 125, 375, 125, 
