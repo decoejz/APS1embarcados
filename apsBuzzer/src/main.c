@@ -245,8 +245,8 @@ int main(void)
 				break;
 			}
 			
-			if(notesI[i]==0){
-				delay_ms(durationM[i]);
+			if(notesM[i]==0){
+				delay_ms(durationM[i]*notesM[1]);
 				duracao += durationM[i]*notesM[1];
 				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
 			}
