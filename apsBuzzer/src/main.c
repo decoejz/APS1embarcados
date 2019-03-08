@@ -34,11 +34,10 @@
 #define LED2_PIO_IDX      24u
 #define LED2_PIO_IDX_MASK (1u << LED2_PIO_IDX)
 
-
-/*#define BUT_PIO           PIOA // periferico que controla o LED
-#define BUT_PIO_ID        10 // ID do periférico PIOC (controla LED)
-#define BUT_PIO_IDX       11u // ID do LED no PIO
-#define BUT_PIO_IDX_MASK  (1u << BUT_PIO_IDX) // Mascara para CONTROLARMOS o LED*/
+#define LED3_PIO          PIOA
+#define LED3_PIO_ID       10
+#define LED3_PIO_IDX      3u
+#define LED3_PIO_IDX_MASK (1u << LED3_PIO_IDX)
 
 #define BMUS_PIO           PIOD
 #define BMUS_PIO_ID        16
@@ -53,12 +52,6 @@
 /************************************************************************/
 /* variaveis globais                                                    */
 /************************************************************************/
-
-
-//*****************************************
-int BI = 25;
-int BM = 15;
-int BD = 1.5;
 
 /************************************************************************/
 /* prototypes                                                           */
@@ -92,12 +85,15 @@ void init(void)
 	pio_set_output(BUZZER_PIO, BUZZER_PIO_IDX_MASK, 0, 0, 0);
 	pio_set_output(LED1_PIO, LED1_PIO_IDX_MASK, 0, 0, 0);
 	pio_set_output(LED2_PIO, LED2_PIO_IDX_MASK, 0, 0, 0);
+	pio_set_output(LED3_PIO, LED3_PIO_IDX_MASK, 0, 0, 0);
 	
-	pio_set_input(BMUS_PIO,BMUS_PIO_IDX,PIO_DEGLITCH);
-	pio_pull_up(BMUS_PIO,BMUS_PIO_IDX,1);
+	pio_set_input(BMUS_PIO,BMUS_PIO_IDX, PIO_PULLUP);
+	//pio_pull_up(BMUS_PIO,BMUS_PIO_IDX,1);
+	pio_set_debounce_filter(BMUS_PIO,BMUS_PIO_IDX,200);
 	
-	pio_set_input(BNEX_PIO,BNEX_PIO_IDX,PIO_DEGLITCH);
+	pio_set_input(BNEX_PIO,BNEX_PIO_IDX,0);
 	pio_pull_up(BNEX_PIO,BNEX_PIO_IDX,1);
+	pio_set_debounce_filter(BNEX_PIO,BNEX_PIO_IDX,200);
 }
 
 /************************************************************************/
@@ -109,20 +105,17 @@ int main(void)
 {
   init();
   
-  int pausa=1;
+  int pausa=0;
   int proxima=0;
   
-  while(pausa){
-	if(!pio_get(PIOD,PIO_DEGLITCH, BMUS_PIO_IDX_MASK)){
-		pausa = !pausa;
-	}
-  }
+  while(pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){}
   
   while (1)
   {
 	pio_set(PIOA, LED1_PIO_IDX_MASK);
 	pio_clear(PIOA, LED2_PIO_IDX_MASK);
-	for (int i=1;i<notesI[0];i++){
+	pio_clear(LED3_PIO, LED3_PIO_IDX_MASK);
+	for (int i=2;i<notesI[0];i++){
 		if(proxima){
 			proxima=0;
 			break;
@@ -132,28 +125,28 @@ int main(void)
 			
 		double duracao=0;
 			
-		while(duracao < durationI[i]*BI){
-			if(!pio_get(PIOD,PIO_DEGLITCH, BMUS_PIO_IDX_MASK)){
+		while(duracao < durationI[i]*notesI[1]){
+			if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
 				pausa = !pausa;
 				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
 				
 				while(pausa){
 					delay_ms(170);
-					if(!pio_get(PIOD,PIO_DEGLITCH, BMUS_PIO_IDX_MASK)){
+					if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
 						pausa = !pausa;
 					}
 					delay_ms(170);
 				}
 			}
 			
-			if(!pio_get(PIOD,PIO_DEGLITCH, BNEX_PIO_IDX_MASK)){
+			if(!pio_get(PIOD,PIO_INPUT, BNEX_PIO_IDX_MASK)){
 				proxima = 1;
 				break;
 			}
 					
 			if(notesI[i]==0){
 				delay_ms(durationI[i]);
-				duracao += durationI[i]*BI;
+				duracao += durationI[i]*notesI[1];
 				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
 			}
 			
@@ -171,7 +164,8 @@ int main(void)
 	
 	pio_set(PIOA, LED2_PIO_IDX_MASK);
 	pio_clear(PIOA, LED1_PIO_IDX_MASK);
-	for (int i=1;i<notesD[0];i++){
+	pio_clear(LED3_PIO, LED3_PIO_IDX_MASK);
+	for (int i=2;i<notesD[0];i++){
 		if(proxima){
 			proxima=0;
 			break;
@@ -181,28 +175,28 @@ int main(void)
 		
 		double duracao=0;
 		
-		while(duracao < durationD[i]*BD){
-			if(!pio_get(PIOD,PIO_DEGLITCH, BMUS_PIO_IDX_MASK)){
+		while(duracao < durationD[i]*notesD[1]){
+			if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
 				pausa = !pausa;
 				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
 				
 				while(pausa){
 					delay_ms(170);
-					if(!pio_get(PIOD,PIO_DEGLITCH, BMUS_PIO_IDX_MASK)){
+					if(!pio_get(PIOD,PIO_INPUT, BMUS_PIO_IDX_MASK)){
 						pausa = !pausa;
 					}
 					delay_ms(170);
 				}
 			}
 			
-			if(!pio_get(PIOD,PIO_DEGLITCH, BNEX_PIO_IDX_MASK)){
+			if(!pio_get(PIOD,PIO_INPUT, BNEX_PIO_IDX_MASK)){
 				proxima = 1;
 				break;
 			}
 			
 			if(notesD[i]==0){
 				delay_ms(durationD[i]);
-				duracao += durationD[i]*BI;
+				duracao += durationD[i]*notesD[1];
 				pio_clear(PIOA, BUZZER_PIO_IDX_MASK);
 			}
 			
