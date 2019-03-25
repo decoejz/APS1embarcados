@@ -1,6 +1,7 @@
 #include <notes.h>
 
 //*****************************************
+//Created by Manoela Cirne
 //Indiana Jones
 int notesI[] = {
 	35, 25, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C5, 
@@ -28,6 +29,7 @@ int durationI[] = {
 };
 
 //*****************************************
+//Created by xitangg - https://github.com/xitangg/-Pirates-of-the-Caribbean-Theme-Song/blob/master/Pirates_of_the_Caribbean_-_Theme_Song.ino
 //Piratas do Caribe	
 int notesD[] = { 
    203, 1, NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
@@ -134,7 +136,8 @@ int durationD[] = {
   125, 125, 125, 125, 125, 500
 };
 //*****************************************
-
+//Created by Manoela Cirne
+//Ava Naguila
 int notesM[] = {
     75, 25, NOTE_E4, PAUS, NOTE_E4, NOTE_GS4, NOTE_F4, NOTE_E4,
     NOTE_GS4, PAUS, NOTE_GS4, NOTE_B4, NOTE_A4, NOTE_GS4,
